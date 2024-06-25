@@ -60,7 +60,7 @@ const addBooksHandler = (request, h) => {
       },
     });
 
-    response.code = 201;
+    response.code(201);
 
     return response;
   }
@@ -74,7 +74,7 @@ const getBooks = (request, h) => {
     },
   });
 
-  response.code = 200;
+  response.code(200);
 
   return response;
 };
@@ -91,7 +91,7 @@ const getBooksDetail = (request, h) => {
       },
     });
 
-    response.code = 200;
+    response.code(200);
 
     return response;
   } else {
@@ -100,7 +100,7 @@ const getBooksDetail = (request, h) => {
       message: "Buku tidak ditemukan",
     });
 
-    response.code = 404;
+    response.code(404)
 
     return response;
   }
@@ -144,7 +144,7 @@ const updateBooks = (request, h) => {
       message: "Gagal memperbarui buku. Id tidak ditemukan",
     });
 
-    response.code = 404;
+    response.code(404);
 
     return response;
   } else {
@@ -168,7 +168,7 @@ const updateBooks = (request, h) => {
       updatedAt
     };
 
-    response.code = 200;
+    response.code(200)
 
     return response;
   }
