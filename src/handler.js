@@ -32,7 +32,7 @@ const addBooksHandler = (request, h) => {
     updatedAt,
   };
 
-  if (name == "") {
+  if (!name) {
     const response = h.response({
       status: "fail",
       message: "Gagal menambahkan buku. Mohon isi nama buku",
@@ -54,7 +54,7 @@ const addBooksHandler = (request, h) => {
 
     const response = h.response({
       status: "success",
-      message: "Buku berhasi ditambahkan",
+      message: "Buku berhasil ditambahkan",
       data: {
         bookId: id,
       },
@@ -67,10 +67,16 @@ const addBooksHandler = (request, h) => {
 };
 
 const getBooks = (request, h) => {
+  const booksSummary = books.map((book) => ({
+    id: book.id,
+    name: book.name,
+    publisher: book.publisher,
+  }));
+
   const response = h.response({
     status: "success",
     data: {
-      books: books,
+      books: booksSummary,
     },
   });
 
@@ -87,7 +93,7 @@ const getBooksDetail = (request, h) => {
     const response = h.response({
       status: "success",
       data: {
-        book: result,
+        book: result[0],
       },
     });
 
@@ -100,7 +106,7 @@ const getBooksDetail = (request, h) => {
       message: "Buku tidak ditemukan",
     });
 
-    response.code(404)
+    response.code(404);
 
     return response;
   }
@@ -119,9 +125,9 @@ const updateBooks = (request, h) => {
   } = request.payload;
   const { booksId } = request.params;
 
-  const index = books.findIndex((book) => (book.id === booksId));
+  const index = books.findIndex((book) => book.id === booksId);
 
-  if (name == "") {
+  if (!name) {
     const response = h.response({
       status: "fail",
       message: "Gagal memperbarui buku. Mohon isi nama buku",
@@ -165,10 +171,10 @@ const updateBooks = (request, h) => {
       pageCount,
       readPage,
       reading,
-      updatedAt
+      updatedAt,
     };
 
-    response.code(200)
+    response.code(200);
 
     return response;
   }
@@ -189,12 +195,18 @@ const deleteBooks = (request, h) => {
     return response;
   } else {
     const response = h.response({
-        status: 'fail',
-        message: 'Buku gagal dihapus. Id tidak ditemukan',
-      });
-      response.code(404);
-      return response;
-    };
+      status: "fail",
+      message: "Buku gagal dihapus. Id tidak ditemukan",
+    });
+    response.code(404);
+    return response;
+  }
 };
 
-module.exports = { addBooksHandler, getBooks, getBooksDetail, updateBooks, deleteBooks };
+module.exports = {
+  addBooksHandler,
+  getBooks,
+  getBooksDetail,
+  updateBooks,
+  deleteBooks,
+};
