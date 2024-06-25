@@ -39,17 +39,56 @@ const addBooksHandler = (request, h) => {
             }
         });
 
+        response.code = 201;
+
         return response;
     }
 }
 
 const getBooks = (request, h) => {
-    return h.response({
+    const response = h.response({
         status: 'success',
         data: {
             books: books
         },
     });
+
+    response.code = 200;
+
+    return response;
 }
 
-module.exports = {addBooksHandler, getBooks}
+const getBooksDetail = (request, h) => {
+    const {booksId} = request.params;
+    const result = books.filter((book) => book.id == booksId);
+
+    if (result.length > 0) {
+        const response = h.response({
+            status: 'success',
+            data: {
+                book: result[0]
+            },
+        });
+
+        response.code = 200;
+
+        return response;
+    } else {
+        const response = h.response({
+            status: 'fail',
+            message: 'Buku tidak ditemukan',
+        });
+
+        response.code = 404;
+
+        return response;
+    }
+}
+
+const updateBooks = (request, h) => {
+    const {name, year, author, summary, publisher, pageCount, readPage, reading} = request.payload;
+    const {bookId} = request.params;
+    const index = books.findIndex((book) => book.id = )
+}
+
+module.exports = {addBooksHandler, getBooks, getBooksDetail}
