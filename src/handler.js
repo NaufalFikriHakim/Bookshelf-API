@@ -1,4 +1,4 @@
-const books = require('./books')
+const books = require('./books');
 const { nanoid } = require('nanoid');
 
 const addBooksHandler = (request, h) => {
@@ -38,9 +38,18 @@ const addBooksHandler = (request, h) => {
                 bookId: id,
             }
         });
-        
+
         return response;
     }
 }
 
-module.exports = {addBooksHandler}
+const getBooks = (request, h) => {
+    return h.response({
+        status: 'success',
+        data: {
+            books: books
+        },
+    });
+}
+
+module.exports = {addBooksHandler, getBooks}
